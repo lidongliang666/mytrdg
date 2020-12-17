@@ -14,7 +14,7 @@ def generate(
     fit,
     word_split,
     stroke_width=0, 
-    stroke_fill="#282828",
+    stroke_fill="#282828"
 ):
     if orientation == 0:
         return _generate_horizontal_text(
@@ -27,7 +27,7 @@ def generate(
             fit,
             word_split,
             stroke_width,
-            stroke_fill,
+            stroke_fill
         )
     elif orientation == 1:
         return _generate_vertical_text(
@@ -43,6 +43,11 @@ def _generate_horizontal_text(
     stroke_width=0, stroke_fill="#282828"
 ):
     image_font = ImageFont.truetype(font=font, size=font_size)
+    special_char = "∠°⊥∥√≤≥▱≌∽∵∴αβγθ△→∈∪∩≈⊆⊇⊊⊋Øπ⊙≠①②③④⑤⑥⑦⑧⑨⑩σ∑℃％∏⌒ωφλ•∀∃"
+    special_font = ["/home/ldl/桌面/python-notebook/My_trdg/trdg/fonts/special/seguisym.ttf",
+                    "/home/ldl/桌面/python-notebook/My_trdg/trdg/fonts/special/unifont-13.0.04.ttf"]
+    if special_font:
+        image_special_font = ImageFont.truetype(font=rnd.choice(special_font),size=font_size)
 
     space_width = int(image_font.getsize(" ")[0] * space_width)
 
@@ -55,14 +60,23 @@ def _generate_horizontal_text(
     else:
         splitted_text = text
 
-    piece_widths = [
-        image_font.getsize(p)[0] if p != " " else space_width for p in splitted_text
-    ]
+    # piece_widths = [
+    #     image_font.getsize(p)[0] if p != " " else space_width for p in splitted_text
+    # ]
+    piece_widths = []
+    for p in splitted_text:
+        if p == " ":
+            piece_widths.append(space_width)
+        elif p in special_char:
+            piece_widths.append(image_special_font.getsize(p)[0])
+        else:
+            piece_widths.append(image_font.getsize(p)[0])
     text_width = sum(piece_widths)
     if not word_split:
         text_width += character_spacing * (len(text) - 1)
-
-    text_height = max([image_font.getsize(p)[1] for p in splitted_text])
+        
+    text_height = max([image_special_font.getsize(p)[1] if p in special_char and special_font else image_font.getsize(p)[1]
+            for p in splitted_text])
 
     txt_img = Image.new("RGBA", (text_width, text_height), (0, 0, 0, 0))
     txt_mask = Image.new("RGB", (text_width, text_height), (0, 0, 0))
@@ -90,11 +104,15 @@ def _generate_horizontal_text(
     )
 
     for i, p in enumerate(splitted_text):
+        if special_font and p in special_char:
+            use_font = image_special_font
+        else:
+            use_font = image_font
         txt_img_draw.text(
             (sum(piece_widths[0:i]) + i * character_spacing * int(not word_split), 0),
             p,
             fill=fill,
-            font=image_font,
+            font=use_font,
             stroke_width=stroke_width,
             stroke_fill=stroke_fill,
         )
@@ -102,7 +120,7 @@ def _generate_horizontal_text(
             (sum(piece_widths[0:i]) + i * character_spacing * int(not word_split), 0),
             p,
             fill=((i + 1) // (255 * 255), (i + 1) // 255, (i + 1) % 255),
-            font=image_font,
+            font=use_font,
             stroke_width=stroke_width,
             stroke_fill=stroke_fill,
         )

@@ -1,4 +1,5 @@
 import os
+import random
 
 from ..data_generator import FakeTextDataGenerator
 from ..utils import load_dict, load_fonts
@@ -50,16 +51,16 @@ class GeneratorFromStrings:
         self.random_skew = random_skew
         self.blur = blur
         self.random_blur = random_blur
-        self.background_type = background_type
-        self.distorsion_type = distorsion_type
+        self.background_type = background_type if isinstance(background_type,list) else [background_type]
+        self.distorsion_type = distorsion_type if isinstance(distorsion_type, list) else [distorsion_type]
         self.distorsion_orientation = distorsion_orientation
         self.is_handwritten = is_handwritten
         self.width = width
         self.alignment = alignment
         self.text_color = text_color
         self.orientation = orientation
-        self.space_width = space_width
-        self.character_spacing = character_spacing
+        self.space_width = space_width if isinstance(space_width,list) else [character_spacing]
+        self.character_spacing = character_spacing if isinstance(character_spacing,list) else [character_spacing]
         self.margins = margins
         self.fit = fit
         self.output_mask = output_mask
@@ -92,8 +93,8 @@ class GeneratorFromStrings:
                 self.random_skew,
                 self.blur,
                 self.random_blur,
-                self.background_type,
-                self.distorsion_type,
+                random.choice( self.background_type),
+                random.choice( self.distorsion_type),
                 self.distorsion_orientation,
                 self.is_handwritten,
                 0,
@@ -101,8 +102,8 @@ class GeneratorFromStrings:
                 self.alignment,
                 self.text_color,
                 self.orientation,
-                self.space_width,
-                self.character_spacing,
+                random.choice( self.space_width),
+                random.choice( self.character_spacing),
                 self.margins,
                 self.fit,
                 self.output_mask,

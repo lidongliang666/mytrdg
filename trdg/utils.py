@@ -10,8 +10,12 @@ def load_dict(lang):
     """
 
     lang_dict = []
+    if os.path.isfile(lang):
+        dictpath = lang
+    else:
+        dictpath = os.path.dirname(__file__), "dicts", lang + ".txt"
     with open(
-        os.path.join(os.path.dirname(__file__), "dicts", lang + ".txt"),
+        os.path.join(dictpath),
         "r",
         encoding="utf8",
         errors="ignore",

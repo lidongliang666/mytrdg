@@ -41,13 +41,14 @@ class GeneratorFromDict:
         stroke_width=0, 
         stroke_fill="#282828",
         image_mode="RGB",
+        char_cat = " "
     ):
         self.count = count
         self.length = length
         self.allow_variable = allow_variable
         self.dict = load_dict(language)
         self.generator = GeneratorFromStrings(
-            create_strings_from_dict(self.length, self.allow_variable, 1000, self.dict),
+            create_strings_from_dict(self.length, self.allow_variable, 1000, self.dict,char_cat=char_cat),
             count,
             fonts if len(fonts) else load_fonts(language),
             language,
