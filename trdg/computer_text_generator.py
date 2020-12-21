@@ -44,8 +44,8 @@ def _generate_horizontal_text(
 ):
     image_font = ImageFont.truetype(font=font, size=font_size)
     special_char = "∠°⊥∥√≤≥▱≌∽∵∴αβγθ△→∈∪∩≈⊆⊇⊊⊋Øπ⊙≠①②③④⑤⑥⑦⑧⑨⑩σ∑℃％∏⌒ωφλ•∀∃"
-    special_font = ["/home/ldl/桌面/python-notebook/My_trdg/trdg/fonts/special/seguisym.ttf",
-                    "/home/ldl/桌面/python-notebook/My_trdg/trdg/fonts/special/unifont-13.0.04.ttf"]
+    special_font = ["/media/ps/hd1/lll/textRecognition/mytrdg/trdg/fonts/special/seguisym.ttf",
+                    "/media/ps/hd1/lll/textRecognition/mytrdg/trdg/fonts/special/unifont-13.0.04.ttf"]
     if special_font:
         image_special_font = ImageFont.truetype(font=rnd.choice(special_font),size=font_size)
 
@@ -74,9 +74,11 @@ def _generate_horizontal_text(
     text_width = sum(piece_widths)
     if not word_split:
         text_width += character_spacing * (len(text) - 1)
-        
-    text_height = max([image_special_font.getsize(p)[1] if p in special_char and special_font else image_font.getsize(p)[1]
-            for p in splitted_text])
+    try:    
+        text_height = max([image_special_font.getsize(p)[1] if p in special_char  else image_font.getsize(p)[1] for p in splitted_text ])
+    except Exception:
+        print(splitted_text+"---")
+        raise ''
 
     txt_img = Image.new("RGBA", (text_width, text_height), (0, 0, 0, 0))
     txt_mask = Image.new("RGB", (text_width, text_height), (0, 0, 0))

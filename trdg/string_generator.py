@@ -37,12 +37,14 @@ def create_strings_from_dict(length, allow_variable, count, lang_dict,char_cat="
         current_string = ""
         for _ in range(0, rnd.randint(1, length) if allow_variable else length):
             current_string += lang_dict[rnd.randrange(dict_len)]
-            current_string += char_cat
-        if len(char_cat)>0:
+            # current_string += char_cat
+        # if len(char_cat)>0:
 
-            strings.append(current_string[:-1*len(char_cat)])
-        else:
-            strings.append(current_string)
+        #     strings.append(current_string[:-1*len(char_cat)])
+        # else:
+        #     strings.append(current_string)
+        strings.append(current_string)
+        # strings.append(current_string.strip())
     return strings
 
 
