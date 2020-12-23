@@ -44,8 +44,8 @@ def _generate_horizontal_text(
 ):
     image_font = ImageFont.truetype(font=font, size=font_size)
     special_char = "∠°⊥∥√≤≥▱≌∽∵∴αβγθ△→∈∪∩≈⊆⊇⊊⊋Øπ⊙≠①②③④⑤⑥⑦⑧⑨⑩σ∑℃％∏⌒ωφλ•∀∃"
-    special_font = ["/media/ps/hd1/lll/textRecognition/mytrdg/trdg/fonts/special/seguisym.ttf",
-                    "/media/ps/hd1/lll/textRecognition/mytrdg/trdg/fonts/special/unifont-13.0.04.ttf"]
+    special_font = ["/home/ldl/桌面/python-notebook/My_trdg/trdg/fonts/special/seguisym.ttf",
+                    "/home/ldl/桌面/python-notebook/My_trdg/trdg/fonts/special/unifont-13.0.04.ttf"]
     if special_font:
         image_special_font = ImageFont.truetype(font=rnd.choice(special_font),size=font_size)
 
