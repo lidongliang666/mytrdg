@@ -70,7 +70,7 @@ class FakeTextDataGenerator(object):
         row_number_range = [i+1 for i in range(row_number)]
         row_height = int(background_height / row_number)
         row_text_maxlength = 40
-        font_size_range = list(range(int(row_height/2),int(row_height+1)))
+        font_size_range = list(range(int(row_height-12),int(row_height+1)))
         #############################
         # Generate background image #
         #############################
@@ -98,9 +98,9 @@ class FakeTextDataGenerator(object):
         texts = []
         row_hastxt = []
         for _ in range(rnd.choice(row_number_range)):
-            rowid = rnd.choice(row_number_range)
+            rowid = rnd.choice(row_number_range)-1
             while rowid  in row_hastxt:
-                rowid = rnd.choice(row_number_range)
+                rowid = rnd.choice(row_number_range)-1
             row_hastxt.append(rowid)
             ##########################
             # Create picture of text #
@@ -207,7 +207,7 @@ class FakeTextDataGenerator(object):
             #############################
             top_left_x =  rnd.choice(range(0,max(1,background_width-resized_img.size[0])))
             top_left_y =  (rowid * row_height) + rnd.choice(range(0,max(1,row_height-font_size)))
-            bbox.append([top_left_x,top_left_y,top_left_x+resized_img.size[0],top_left_y+resized_img.size[1]])
+            bbox.append([top_left_x,top_left_y,top_left_x+resized_img.size[0]-1,top_left_y+resized_img.size[1]-1])
             background_img.paste(
                 resized_img,
                 (top_left_x, top_left_y),
